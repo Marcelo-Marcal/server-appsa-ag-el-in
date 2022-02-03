@@ -1,7 +1,7 @@
-import { v4 as uuidV4  } from 'uuid';
+import { v4 as uuidV4 } from 'uuid';
 
-class Category {
-  
+class Unit {
+
   id?: string;
   name: string;
   shortName: string;
@@ -14,16 +14,15 @@ class Category {
   }
   phone: string;
   descriptionOperation: string;
-  // latitude:,
-  // longitude:,
-  // type: VIRTUAL,
-  created_at: Date;
+  latitude: number;
+  longitude: number;
+  type: string;
 
   constructor() {
-    if(!this.id) {
+    if (!this.id) {
       this.id = uuidV4();
     }
   }
 }
 
-export { Category }
+export { Unit }
