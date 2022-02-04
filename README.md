@@ -1,23 +1,6 @@
 # AGENDAMENTO ELETRÔNICO INTEGRADO (SulAmérica)
 
-
 Criando a API com Node.JS
-
-Configurando ts-node-dev
-
-Instalação do Eslint
-
-Debugando a aplicação
-```
-{
-  "type": "node",
-  "request": "attach",
-  "name": "Launch Program",
-  "skipFiles": ["<node_internals>/**"],
-  "outFiles": ["${workspaceFolder}/**/*.js"]
-}
-```
-
 
 A plataforma de Agendamento Eletrônico Integrado tem como objetivo disponibilizar serviços de
 agendamento direto, ou seja, dado um hub de parceiros conectados à mesma, os beneficiários têm a opção
@@ -27,22 +10,13 @@ apenas o aumento da rede médica disponível ao mesmo.
 
 Seleção da Especialidade > Seleção de Unidade (local físico) > Seleção de Médico e Horário > Confirmação
 
-Atualmente a SulAmérica possui uma plataforma de Agendamento capaz de “plugar” parceiros à sua jornada
-de agendamento eletrônico. Tal plataforma se integra com os parceiros através de API’s, que são
-disponibilizadas pelos mesmos e acessadas pela plataforma de tempos em tempos para coletar as
-informações (jobs), ou seja, a mesma acionará as APIs do parceiro para buscar as informações necessárias,
-que serão parametrizadas conforme necessidade.
-Uma observação importante é que o parceiro precisa estar preparado para não ter problemas de
-performance quando as API’s forem acionadas.
-
-
 Toda a integração se dá por API’s seguindo o padrão REST, retornando JSON como respostas, códigos HTTP e
 autenticação.
 Todos os passos descritos no documento abaixo são importantes para que a integração se dê por completa,
 sendo compostos pelas seguintes APIs:
 
-- Obter Unidades
-- Obter Profissionais
+- Obter Unidades - Ok
+- Obter Profissionais - Ok
 - Obter Agendas Disponíveis
 - Criar Agendamento
 - Cancelar Agendamento
@@ -86,3 +60,104 @@ Não existem unidades para serem retornadas, porém a requisição retorna com s
 }
 ```
 
+Method GET
+Path /api/v1/professionals
+
+Retornou médicos ou técnicos com sucesso.
+```
+{
+  "data": [
+    {
+      "id": "10001",
+      "unitId": "1",
+      "name": "Leandro Augusto Franco Nascimento",
+      "gender": "MALE",
+      "document": {
+        "type": "CRM",
+        "state": "SP",
+        "number": "129128"
+      },
+      "photo": "https://s2pics-dev.s3.amazonaws.com/profissionais/fotos/103038_s.jpg"
+    }
+  ]
+}
+```
+Não existem médicos ou técnicos para serem retornados, porém a requisição retorna com sucesso.
+```
+{
+  "data": []
+}
+```
+
+Method GET
+Path /api/v1/slots?date={yyyy-MM-dd}
+Query Params date
+
+Retornou horários de agendas com sucesso.
+```
+{
+  "data": [
+    {
+      "id": "20001",
+      "professionalId": "10001",
+      "unitId": "1",
+      "productId": "9000001",
+      "healthPlan": "DiretoSP",
+      "date": "2021-01-01T11:30:00",
+      "requirement": {
+        "gender": "MALE",
+        "minAge": 18,
+        "maxAge": 50
+      }
+    }
+  ]
+}
+```
+Não existem horários de agendas para serem retornados, porém a requisição retorna com sucesso.
+```
+{
+  "data": []
+}
+```
+QUERY:
+```
+
+--Obter Profissionais
+                                                                  
+SELECT DISTINCT (agenda_central.cd_prestador),prestador.nm_prestador, conselho.ds_conselho, conselho.cd_uf, prestador.nr_documento
+FROM dbamv.agenda_central 
+LEFT JOIN dbamv.prestador ON prestador.CD_PRESTADOR = agenda_central.CD_PRESTADOR
+LEFT JOIN dbamv.conselho ON conselho.CD_CONSELHO = prestador.CD_CONSELHO
+WHERE agenda_central.cd_prestador IS NOT NULL
+
+
+--Obter Agendas Disponiveis
+
+SELECT it_agenda_central.cd_it_agenda_central,agenda_central.cd_prestador,agenda_central.cd_unidade_atendimento,it_agenda_central.hr_agenda,'ALL' Genero 
+FROM agenda_central    
+LEFT JOIN dbamv.it_agenda_central ON it_agenda_central.cd_agenda_central= agenda_central.cd_agenda_central
+WHERE sn_ativo = 'S'
+
+
+--Obter Unidades
+
+SELECT DISTINCT (agenda_central.cd_unidade_atendimento),unidade_atendimento.ds_unidade_atendimento,multi_empresas.nr_cep,multi_empresas.nm_bairro,cidade.nm_cidade,multi_empresas.ds_endereco,multi_empresas.cd_uf,multi_empresas.nr_telefone_empresa,'PHYSICAL' Tipo  
+FROM dbamv.agenda_central
+LEFT JOIN dbamv.multi_empresas ON multi_empresas.cd_multi_empresa= agenda_central.cd_multi_empresa
+LEFT JOIN dbamv.unidade_atendimento ON unidade_atendimento.cd_unidade_atendimento= agenda_central.cd_unidade_atendimento
+LEFT JOIN dbamv.cidade ON cidade.cd_cidade= multi_empresas.cd_cidade
+```
+
+
+
+
+Debugando a aplicação
+```
+{
+  "type": "node",
+  "request": "attach",
+  "name": "Launch Program",
+  "skipFiles": ["<node_internals>/**"],
+  "outFiles": ["${workspaceFolder}/**/*.js"]
+}
+```
