@@ -1,7 +1,6 @@
 import { Professional } from '../../model/Professional';
 import { IProfessionalsRepository } from '../IProfessionalsRepository';
 
-
 class ProfessionalsRepository implements IProfessionalsRepository {
   private static INSTANCE: IProfessionalsRepository;
 

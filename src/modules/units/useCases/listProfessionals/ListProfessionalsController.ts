@@ -1,8 +1,6 @@
-
 import { Request, Response } from "express";
 
 import { ListProfessionalsUseCase } from "./ListProfessionalsUseCase";
-
 
 class ListProfessionalsController {
   constructor(private listProfessionalsUseCase: ListProfessionalsUseCase) { }

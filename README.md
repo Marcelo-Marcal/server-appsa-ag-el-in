@@ -18,7 +18,7 @@ sendo compostos pelas seguintes APIs:
 - Obter Unidades - Ok
 - Obter Profissionais - Ok
 - Obter Agendas Disponíveis
-- Criar Agendamento
+- Criar Agendamento - 
 - Cancelar Agendamento
 - Obter Detalhes de Especialidades (Verificar necessidade)
 
@@ -26,6 +26,7 @@ Descrição técnica: Essa API é responsável por retornar as unidades médicas
 beneficiário) disponíveis para agendamentos de consultas.
 
 Method GET
+
 Path /api/v1/units
 
 Retornou unidades com sucesso.
@@ -61,6 +62,7 @@ Não existem unidades para serem retornadas, porém a requisição retorna com s
 ```
 
 Method GET
+
 Path /api/v1/professionals
 
 Retornou médicos ou técnicos com sucesso.
@@ -90,7 +92,13 @@ Não existem médicos ou técnicos para serem retornados, porém a requisição 
 ```
 
 Method GET
+
 Path /api/v1/slots?date={yyyy-MM-dd}
+
+schedule time
+diary schedule
+schedule
+
 Query Params date
 
 Retornou horários de agendas com sucesso.

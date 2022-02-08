@@ -1,7 +1,6 @@
 import { Unit } from '../../model/Unit';
 import { IUnitsRepository } from '../IUnitsRepository';
 
-
 class UnitsRepository implements IUnitsRepository {
 
   private static INSTANCE: UnitsRepository;
