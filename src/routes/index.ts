@@ -2,7 +2,6 @@ import { Router } from "express";
 
 import { unitsRoutes } from "./unitsRoutes";
 import { professionalsRoutes } from "./professionalsRoutes";
-
 import { appointmentsRoutes } from "./appointmentsRoutes";
 
 const router = Router();

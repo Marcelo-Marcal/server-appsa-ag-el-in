@@ -1,6 +1,6 @@
 import { Appointment } from "../model/Appointment";
 
-interface IAppointmentRepository {
+interface IAppointmentsRepository {
   list(): Appointment[];
 }
 
