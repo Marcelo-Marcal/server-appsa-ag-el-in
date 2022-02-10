@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { listProfessionalsController } from '../modules/units/useCases/listProfessionals';
+import { listProfessionalsController } from '../modules/professionals/useCases/listProfessionals';
 
 const professionalsRoutes = Router();
 

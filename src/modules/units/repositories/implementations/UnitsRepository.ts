@@ -1,5 +1,6 @@
 import { Unit } from '../../model/Unit';
 import { IUnitsRepository } from '../IUnitsRepository';
+import { db } from '../../../../database/db';
 
 class UnitsRepository implements IUnitsRepository {
 
@@ -34,6 +35,14 @@ class UnitsRepository implements IUnitsRepository {
         type: "VIRTUAL"
       }
     ];
+    // try {
+    //   const units: Unit[] = db("dbamv.agenda_central").select("*")
+
+    //   return units
+
+    // } catch (error) {
+    //   throw new Error("Mensagem descrevendo o erro que ocorreu");
+    // }
   }
 }
 

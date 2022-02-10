@@ -2,7 +2,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 class Unit {
 
-  id?: string;
+  id: string;
   name: string;
   shortName: string;
   address: {
@@ -12,11 +12,11 @@ class Unit {
     state: string,
     street: string,
   }
-  phone: string;
-  descriptionOperation: string;
-  latitude: number;
-  longitude: number;
-  type: string;
+  phone?: string;
+  descriptionOperation?: string;
+  latitude?: number;
+  longitude?: number;
+  type: "VIRTUAL" | "PHYSICAL";
 
   constructor() {
     if (!this.id) {
