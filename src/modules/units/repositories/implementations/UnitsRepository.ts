@@ -35,14 +35,14 @@ class UnitsRepository implements IUnitsRepository {
         type: "VIRTUAL"
       }
     ];
-    // try {
-    //   const units: Unit[] = db("dbamv.agenda_central").select("*")
+    try {
+      const units: Unit[] = db("dbamv.agenda_central").select("*")
 
-    //   return units
+      return units
 
-    // } catch (error) {
-    //   throw new Error("Mensagem descrevendo o erro que ocorreu");
-    // }
+    } catch (error) {
+      throw new Error("Mensagem descrevendo o erro que ocorreu");
+    }
   }
 }
 

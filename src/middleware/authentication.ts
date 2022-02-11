@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 
-
 function authentication(req: Request, res: Response, next: NextFunction) {
   const authheader = req.headers.authorization;
   // console.log(req.headers);
