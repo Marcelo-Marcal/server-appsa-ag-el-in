@@ -1,14 +1,13 @@
 import knex from "knex";
 import Oracle from "oracledb";
-import db from "./db";
 
 // Oracle.initOracleClient({ libDir: "C:\\Node\\instantclient_19_6_win64" });
-// Oracle.initOracleClient({ libDir: "/home/marcelo/Documentos/DataIntegra/DB/instantclient_19_6_win64" });
+Oracle.initOracleClient({ libDir: "/home/marcelo/Documentos/DataIntegra/DB/instantclient_19_6_win64" });
 
 const db = knex({
 
   client: "oracledb",
-  connection: {
+  db: {
     host: "10.11.0.3",
     user: "dbamv",
     password: "inovar2013",
@@ -20,4 +19,4 @@ const db = knex({
   },
 });
 
-export { db };
+export default db;
