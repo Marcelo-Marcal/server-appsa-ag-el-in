@@ -7,8 +7,8 @@ class ListUnitsUseCase {
 
   constructor(private unitsRepository: IUnitsRepository) { }
 
-  execute(): TListUnitsUseCase {
-    const units = this.unitsRepository.list();
+  async execute(): Promise<TListUnitsUseCase> {
+    const units = await this.unitsRepository.list();
 
     const data: TListUnitsUseCase = { data: units }
     return data;

@@ -5,9 +5,9 @@ import { ListUnitsUseCase } from './ListUnitsUseCase';
 class ListUnitsController {
   constructor(private listUnitsUseCase: ListUnitsUseCase) { }
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const all = this.listUnitsUseCase.execute();
+      const all = await this.listUnitsUseCase.execute();
 
       return response.status(200).json(all);
     } catch (error) {
