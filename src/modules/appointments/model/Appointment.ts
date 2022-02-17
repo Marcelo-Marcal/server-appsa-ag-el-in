@@ -9,7 +9,7 @@ class Appointment {
   healthPlan: string;
   date: string;
   requirement?: {
-    gender: string;
+    gender?: "ALL" | "MALE" | "FEMALE";
     minAge: 18;
     maxAge: 50;
   }

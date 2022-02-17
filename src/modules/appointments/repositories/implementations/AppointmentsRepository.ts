@@ -1,12 +1,14 @@
 import { Appointment } from '../../model/Appointment';
 import { IAppointmentsRepository } from '../IAppointmentsRepository';
+import knex from '../../../../database/db';
 
 
-class AppointmentsRepository implements IAppointmentsRepository {
-  private static INSTANCE: IAppointmentsRepository;
+export class AppointmentsRepository implements IAppointmentsRepository {
 
-  private constructor() { }
+  private static INSTANCE: AppointmentsRepository;
 
+  private constructor() {
+  }
   public static getInstance(): AppointmentsRepository {
     if (!AppointmentsRepository.INSTANCE) {
       AppointmentsRepository.INSTANCE = new AppointmentsRepository();
@@ -14,23 +16,33 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return AppointmentsRepository.INSTANCE;
   }
 
-  list(): Appointment[] {
-    return [
-      {
-        id: "20001",
-        professionalId: "10001",
-        unitId: "1",
-        productId: "9000001",
-        healthPlan: "DiretoSP",
-        date: "2021-01-01T11:30:00",
-        requirement: {
-          gender: "MALE",
-          minAge: 18,
-          maxAge: 50
-        }
+  async list(): Promise<Appointment[]> {
+
+    const allAppointmentS: any[] = await knex.raw(`
+      SELECT it_agenda_central.cd_it_agenda_central,
+        agenda_central.cd_prestador,
+        agenda_central.cd_unidade_atendimento,
+        it_agenda_central.hr_agenda,
+        'ALL' Genero 
+      FROM agenda_central    
+      LEFT JOIN dbamv.it_agenda_central ON it_agenda_central.cd_agenda_central= agenda_central.cd_agenda_central
+      WHERE sn_ativo = 'S'
+    `)
+
+    const appointments: Appointment[] = allAppointmentS.map(appointment => ({
+      id: appointment.CD_IT_AGENDA_CENTRAL,
+      professionalId: appointment.CD_PRESTADOR,
+      unitId: appointment.CD_UNIDADE_ATENDIMENTO,
+      productId: 'Identificador do produto, esse padrão SulAmérica.',
+      healthPlan: 'DiretoSP - Plano de saúde. Definido pela SulAmérica',
+      date: appointment.HR_AGENDA,
+      requirement: {
+        gender: appointment.TIPO,
+        minAge: 18,
+        maxAge: 50
       }
-    ];
+    }))
+
+    return appointments
   }
 }
-
-export { AppointmentsRepository }

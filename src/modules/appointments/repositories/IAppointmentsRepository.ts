@@ -1,7 +1,7 @@
 import { Appointment } from "../model/Appointment";
 
 interface IAppointmentsRepository {
-  list(): Appointment[];
+  list(): Promise<Appointment[]>;
 }
 
 export { IAppointmentsRepository }

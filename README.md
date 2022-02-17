@@ -175,6 +175,11 @@ LEFT JOIN dbamv.it_agenda_central ON it_agenda_central.cd_agenda_central= agenda
 WHERE sn_ativo = 'S'
 ```
 
+OBS:
+Falta a query de healthPlan: Plano de saúde. Definido pela SulAmérica. 
+Por exemplo: DiretoSP
+
+
 
 
 
