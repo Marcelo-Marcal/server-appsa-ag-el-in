@@ -7,8 +7,8 @@ class ListProfessionalsUseCase {
 
   constructor(private professionalsRoutes: IProfessionalsRepository) { }
 
-  execute(): TListProfessionalsUseCase {
-    const professionals = this.professionalsRoutes.list();
+  async execute(): Promise<TListProfessionalsUseCase> {
+    const professionals = await this.professionalsRoutes.list();
 
     const data: TListProfessionalsUseCase = { data: professionals }
     return data;

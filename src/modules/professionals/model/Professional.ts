@@ -5,7 +5,7 @@ class Professional {
   id?: string;
   unitId: string;
   name: string;
-  gender: string;
+  gender: "MALE" | "FEMALE";
   document: {
     type: string,
     state: string,

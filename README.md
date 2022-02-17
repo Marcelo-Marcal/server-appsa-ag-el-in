@@ -1,5 +1,8 @@
 # AGENDAMENTO ELETRÔNICO INTEGRADO (SulAmérica)
 
+Rodar API
+npm run dev
+
 Criando a API com Node.JS
 
 A plataforma de Agendamento Eletrônico Integrado tem como objetivo disponibilizar serviços de
@@ -129,10 +132,31 @@ Não existem horários de agendas para serem retornados, porém a requisição r
 ```
 QUERY:
 ```
+--Obter Unidades
+
+SELECT DISTINCT (agenda_central.cd_unidade_atendimento),
+  unidade_atendimento.ds_unidade_atendimento,
+  multi_empresas.nr_cep,
+  multi_empresas.nm_bairro,
+  cidade.nm_cidade,
+  multi_empresas.ds_endereco,
+  multi_empresas.cd_uf,
+  multi_empresas.nr_telefone_empresa,
+  'PHYSICAL' Tipo  
+FROM dbamv.agenda_central
+LEFT JOIN dbamv.multi_empresas ON multi_empresas.cd_multi_empresa= agenda_central.cd_multi_empresa
+LEFT JOIN dbamv.unidade_atendimento ON unidade_atendimento.cd_unidade_atendimento= agenda_central.cd_unidade_atendimento
+LEFT JOIN dbamv.cidade ON cidade.cd_cidade= multi_empresas.cd_cidade
+
 
 --Obter Profissionais
                                                                   
-SELECT DISTINCT (agenda_central.cd_prestador),prestador.nm_prestador, conselho.ds_conselho, conselho.cd_uf, prestador.nr_documento
+SELECT DISTINCT (agenda_central.cd_prestador),
+  agenda_central.cd_unidade_atendimento,
+  prestador.nm_prestador, 
+  conselho.ds_conselho, 
+  conselho.cd_uf, 
+  prestador.nr_documento
 FROM dbamv.agenda_central 
 LEFT JOIN dbamv.prestador ON prestador.CD_PRESTADOR = agenda_central.CD_PRESTADOR
 LEFT JOIN dbamv.conselho ON conselho.CD_CONSELHO = prestador.CD_CONSELHO
@@ -141,19 +165,14 @@ WHERE agenda_central.cd_prestador IS NOT NULL
 
 --Obter Agendas Disponiveis
 
-SELECT it_agenda_central.cd_it_agenda_central,agenda_central.cd_prestador,agenda_central.cd_unidade_atendimento,it_agenda_central.hr_agenda,'ALL' Genero 
+SELECT it_agenda_central.cd_it_agenda_central,
+  agenda_central.cd_prestador,
+  agenda_central.cd_unidade_atendimento,
+  it_agenda_central.hr_agenda,
+  'ALL' Genero 
 FROM agenda_central    
 LEFT JOIN dbamv.it_agenda_central ON it_agenda_central.cd_agenda_central= agenda_central.cd_agenda_central
 WHERE sn_ativo = 'S'
-
-
---Obter Unidades
-
-SELECT DISTINCT (agenda_central.cd_unidade_atendimento),unidade_atendimento.ds_unidade_atendimento,multi_empresas.nr_cep,multi_empresas.nm_bairro,cidade.nm_cidade,multi_empresas.ds_endereco,multi_empresas.cd_uf,multi_empresas.nr_telefone_empresa,'PHYSICAL' Tipo  
-FROM dbamv.agenda_central
-LEFT JOIN dbamv.multi_empresas ON multi_empresas.cd_multi_empresa= agenda_central.cd_multi_empresa
-LEFT JOIN dbamv.unidade_atendimento ON unidade_atendimento.cd_unidade_atendimento= agenda_central.cd_unidade_atendimento
-LEFT JOIN dbamv.cidade ON cidade.cd_cidade= multi_empresas.cd_cidade
 ```
 
 

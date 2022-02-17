@@ -5,10 +5,16 @@ import { ListProfessionalsUseCase } from "./ListProfessionalsUseCase";
 class ListProfessionalsController {
   constructor(private listProfessionalsUseCase: ListProfessionalsUseCase) { }
 
-  handle(request: Request, response: Response): Response {
-    const all = this.listProfessionalsUseCase.execute();
+  async handle(request: Request, response: Response): Promise<Response> {
+    try {
+      const all = await this.listProfessionalsUseCase.execute();
 
-    return response.json(all);
+      return response.status(200).json(all);
+    } catch (error) {
+      return response.status(500).json({
+        massage: error.message || "Mensagem descrevendo o erro que ocorreu!"
+      })
+    }
   }
 }
 
