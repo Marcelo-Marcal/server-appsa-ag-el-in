@@ -1,7 +1,7 @@
 # AGENDAMENTO ELETRÔNICO INTEGRADO (SulAmérica)
 
-Rodar API
-npm run dev
+Rodar API's
+```npm run dev```
 
 Criando a API com Node.JS
 
