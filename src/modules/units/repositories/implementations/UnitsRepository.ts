@@ -28,7 +28,7 @@ export class UnitsRepository implements IUnitsRepository {
           multi_empresas.cd_uf,
           multi_empresas.nr_telefone_empresa,
           'PHYSICAL' Tipo 
-        FROM dbamv.agenda_central
+        FROM dbamv.agenda_centUnitsRepositoryral
         LEFT JOIN dbamv.multi_empresas ON multi_empresas.cd_multi_empresa = agenda_central.cd_multi_empresa
         LEFT JOIN dbamv.unidade_atendimento ON unidade_atendimento.cd_unidade_atendimento = agenda_central.cd_unidade_atendimento
         LEFT JOIN dbamv.cidade ON cidade.cd_cidade = multi_empresas.cd_cidade        
